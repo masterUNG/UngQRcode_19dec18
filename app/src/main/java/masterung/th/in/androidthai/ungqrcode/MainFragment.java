@@ -1,6 +1,7 @@
 package masterung.th.in.androidthai.ungqrcode;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 
 /**
@@ -27,7 +30,19 @@ public class MainFragment extends Fragment {
 //        Register Controller
         registerController();
 
+//        Check Login
+        checkLogin();
+
+
     }   // Main Method
+
+    private void checkLogin() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getUid() != null) {
+            startActivity(new Intent(getActivity(), ServiceActivity.class));
+            getActivity().finish();
+        }
+    }
 
     private void registerController() {
         TextView textView = getView().findViewById(R.id.txtRegister);
