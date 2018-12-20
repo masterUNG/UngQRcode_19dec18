@@ -32,7 +32,19 @@ public class ServiceActivity extends AppCompatActivity {
 //        Create Toolbar
         createToolbar();
 
+//        Add Fragment
+        addFragment(savedInstanceState);
+
     }   // Main Method
+
+    private void addFragment(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.contentServiceFragment, new ListProductFragment())
+                    .commit();
+        }
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
