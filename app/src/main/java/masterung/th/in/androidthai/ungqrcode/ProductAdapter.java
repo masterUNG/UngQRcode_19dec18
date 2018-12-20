@@ -19,18 +19,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProduceV
     private ArrayList<String> nameProductStringArrayList,
             descriptionStringArrayList, amountStringArrayList, pictureStringArrayList;
     private LayoutInflater layoutInflater;
+    private OnClickItem onClickItem;
 
-    public ProductAdapter(Context context,
-                          ArrayList<String> nameProductStringArrayList,
-                          ArrayList<String> descriptionStringArrayList,
-                          ArrayList<String> amountStringArrayList,
-                          ArrayList<String> pictureStringArrayList) {
+    public ProductAdapter(Context context, ArrayList<String> nameProductStringArrayList, ArrayList<String> descriptionStringArrayList, ArrayList<String> amountStringArrayList, ArrayList<String> pictureStringArrayList, OnClickItem onClickItem) {
         this.layoutInflater = LayoutInflater.from(context);
         this.nameProductStringArrayList = nameProductStringArrayList;
         this.descriptionStringArrayList = descriptionStringArrayList;
         this.amountStringArrayList = amountStringArrayList;
         this.pictureStringArrayList = pictureStringArrayList;
-    }   // Constructor
+        this.onClickItem = onClickItem;
+    }
 
     @NonNull
     @Override
@@ -43,7 +41,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProduceV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProduceViewHolder produceViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ProduceViewHolder produceViewHolder, int i) {
 
         String nameProductString = nameProductStringArrayList.get(i);
         String descriptionString = descriptionStringArrayList.get(i);
@@ -55,6 +53,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProduceV
         produceViewHolder.amountTextView.setText("Amount = " + amountString + " unit");
 
         Picasso.get().load(urlPictureString).into(produceViewHolder.imageView);
+
+        produceViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickItem.onClickItem(v, produceViewHolder.getAdapterPosition());
+            }
+        });
+
+
     }
 
     @Override
