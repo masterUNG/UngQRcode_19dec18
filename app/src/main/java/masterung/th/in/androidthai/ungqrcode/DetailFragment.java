@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -24,10 +28,10 @@ public class DetailFragment extends Fragment {
     }
 
     public static DetailFragment detailInstance(String nameProduct,
-                                         String description,
-                                         String urlPicture,
-                                         String receive,
-                                         String amount) {
+                                                String description,
+                                                String urlPicture,
+                                                String receive,
+                                                String amount) {
 
         DetailFragment detailFragment = new DetailFragment();
         Bundle bundle = new Bundle();
@@ -47,8 +51,26 @@ public class DetailFragment extends Fragment {
 //        Receive Value
         receiveValue();
 
+//        Show View
+        showView();
 
     }   // Main Method
+
+    private void showView() {
+        TextView nameTextView = getView().findViewById(R.id.txtNameProduct);
+        TextView descripTextView = getView().findViewById(R.id.txtDescription);
+        TextView amountTextView = getView().findViewById(R.id.txtAmount);
+        TextView receiveTextView = getView().findViewById(R.id.txtReceive);
+        ImageView imageView = getView().findViewById(R.id.imvProduct);
+
+        nameTextView.setText(nameProductString);
+        descripTextView.setText(descrittionString);
+        amountTextView.setText("Amount ==> " + amountString + " unit");
+        receiveTextView.setText(receiveString);
+
+        Picasso.get().load(pictureString).into(imageView);
+
+    }
 
     private void receiveValue() {
         nameProductString = getArguments().getString("NameProduct", "NameProduct");
