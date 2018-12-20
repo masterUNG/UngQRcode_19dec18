@@ -4,6 +4,12 @@
 
     <item
         app:showAsAction="always"
+        android:icon="@drawable/ic_action_qr"
+        android:id="@+id/itemQR"
+        android:title="Read QR code" />
+
+    <item
+        app:showAsAction="always"
         android:icon="@drawable/ic_action_logout"
         android:id="@+id/itemLogOut"
         android:title="Log Out" />
