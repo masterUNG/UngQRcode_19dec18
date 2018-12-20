@@ -1,6 +1,10 @@
 package masterung.th.in.androidthai.ungqrcode;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +18,8 @@ public class ServiceActivity extends AppCompatActivity {
 
     //    Explicit
     private String nameString;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +35,26 @@ public class ServiceActivity extends AppCompatActivity {
     }   // Main Method
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+//        For Hamburger
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+//        For LogOut
         if (item.getItemId() == R.id.itemLogOut) {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signOut();
@@ -58,6 +82,21 @@ public class ServiceActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarService);
         setSupportActionBar(toolbar);
         getSupportActionBar().setSubtitle(nameString);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_action_hambarker);
+
+        drawerLayout = findViewById(R.id.drawerLayoutService);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                ServiceActivity.this,
+                drawerLayout,
+                R.string.open,
+                R.string.close
+        );
+
+
+
+
     }
 
 }   // Main Class
